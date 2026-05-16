@@ -40,6 +40,43 @@ source ~/.bashrc
 
 ---
 
+## Updating
+
+```bash
+cd ~/moulinette-42
+git pull
+```
+
+ถ้า git pull แจ้ง "local changes would be overwritten":
+
+```bash
+git fetch origin && git reset --hard origin/main
+```
+
+---
+
+## Cleanup (ลบไฟล์เก่าที่ไม่ใช้)
+
+ถ้าเคยติดตั้งเวอร์ชันเก่ามาก่อน อาจมีไฟล์ค้างอยู่:
+
+```bash
+# ลบ moulinette.sh เวอร์ชันเก่า (แทนที่ด้วย moulinette แล้ว)
+rm -f ~/moulinette-42/moulinette.sh
+
+# ลบ alias เก่าออกจาก ~/.bashrc
+sed -i '/alias moulinette=/d' ~/.bashrc
+
+# ลบ symlink/file เก่าใน ~/.local/bin
+rm -f ~/.local/bin/moulinette
+
+# รีโหลด shell
+source ~/.bashrc
+```
+
+> `install.sh` ทำ cleanup เหล่านี้ให้อัตโนมัติ — รัน `bash install.sh` อีกครั้งก็ได้
+
+---
+
 ## Usage
 
 **`cd` เข้า folder แล้วรัน `moulinette` เลย — ไม่ต้องพิมพ์อะไรเพิ่ม:**
