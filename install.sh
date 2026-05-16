@@ -1,10 +1,8 @@
 #!/bin/bash
 # ============================================================
-#  Harmoy Moulinette — Installer
-#  Tested on: Ubuntu 20.04 / 22.04 / 24.04
+#  Harmoy Moulinette — Installer (no sudo required)
+#  Tested on: Ubuntu 20.04 / 22.04 / 24.04 / 42 School
 # ============================================================
-
-set -e
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
 CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
@@ -17,52 +15,47 @@ echo " ║  Harmoy Moulinette Installer          ║"
 echo " ╚═══════════════════════════════════════╝"
 echo -e "${NC}"
 
-check_or_install() {
-    local pkg="$1"
+check_tool() {
+    local name="$1"
     local cmd="${2:-$1}"
     if command -v "$cmd" &>/dev/null; then
-        echo -e "  ${GREEN}[OK]${NC} $pkg already installed"
+        echo -e "  ${GREEN}[OK]${NC} $name"
     else
-        echo -e "  ${YELLOW}[INSTALL]${NC} Installing $pkg..."
-        sudo apt-get install -y "$pkg" -q
-        echo -e "  ${GREEN}[OK]${NC} $pkg installed"
+        echo -e "  ${YELLOW}[WARN]${NC} $name not found (install manually if needed)"
     fi
 }
 
-echo -e "\n${BOLD}Checking dependencies...${NC}"
-sudo apt-get update -q
+echo -e "\n${BOLD}Checking tools...${NC}"
+check_tool "gcc"
+check_tool "cc (clang/gcc)" "cc"
+check_tool "nm (binutils)" "nm"
+check_tool "valgrind"
+check_tool "python3"
+check_tool "pip3"
 
-check_or_install "gcc" "gcc"
-check_or_install "clang" "cc"
-check_or_install "python3" "python3"
-check_or_install "python3-pip" "pip3"
-check_or_install "binutils" "nm"
-check_or_install "valgrind" "valgrind"
-
-echo -e "\n${BOLD}Installing norminette...${NC}"
+echo -e "\n${BOLD}Installing norminette (no sudo)...${NC}"
 if command -v norminette &>/dev/null; then
     echo -e "  ${GREEN}[OK]${NC} norminette already installed ($(norminette --version 2>&1 | head -1))"
 else
-    pip3 install norminette --quiet
-    if command -v norminette &>/dev/null; then
-        echo -e "  ${GREEN}[OK]${NC} norminette installed"
-    else
-        PATH_LINE='export PATH="$HOME/.local/bin:$PATH"'
-        for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
-            [ -f "$rc" ] || continue
-            grep -qF "$PATH_LINE" "$rc" || echo "$PATH_LINE" >> "$rc"
-        done
+    if command -v pip3 &>/dev/null; then
+        pip3 install norminette --user --quiet
         export PATH="$HOME/.local/bin:$PATH"
-        echo -e "  ${GREEN}[OK]${NC} norminette installed (added ~/.local/bin to PATH)"
+        if command -v norminette &>/dev/null; then
+            echo -e "  ${GREEN}[OK]${NC} norminette installed"
+        else
+            echo -e "  ${YELLOW}[WARN]${NC} norminette installed but not in PATH yet (will be added below)"
+        fi
+    else
+        echo -e "  ${YELLOW}[WARN]${NC} pip3 not found — cannot install norminette"
+        echo -e "         Run: ${CYAN}pip3 install norminette --user${NC}"
     fi
 fi
 
 echo -e "\n${BOLD}Setting up moulinette command...${NC}"
 
-# Make the moulinette script executable
 chmod +x "$MOULINETTE_DIR/moulinette"
 
-# Remove any old alias or symlink that could conflict
+# Remove any old alias or file that could conflict
 for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
     [ -f "$rc" ] || continue
     if grep -q "alias moulinette=" "$rc"; then
@@ -75,16 +68,25 @@ if [ -L "$HOME/.local/bin/moulinette" ] || [ -f "$HOME/.local/bin/moulinette" ];
     echo -e "  ${YELLOW}[CLEAN]${NC} Removed old file at ~/.local/bin/moulinette"
 fi
 
-# Add moulinette-42 dir to PATH
-PATH_LINE="export PATH=\"$MOULINETTE_DIR:\$PATH\""
+# Add moulinette-42 dir and ~/.local/bin to PATH
 for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
     [ -f "$rc" ] || continue
+
+    # moulinette-42 path
+    PATH_LINE="export PATH=\"$MOULINETTE_DIR:\$PATH\""
     if grep -q "moulinette-42" "$rc"; then
         sed -i "s|export PATH=.*moulinette-42.*|$PATH_LINE|" "$rc"
-        echo -e "  ${GREEN}[OK]${NC} Updated PATH in $rc"
+        echo -e "  ${GREEN}[OK]${NC} Updated moulinette PATH in $rc"
     else
         echo "$PATH_LINE" >> "$rc"
         echo -e "  ${GREEN}[OK]${NC} Added moulinette to PATH in $rc"
+    fi
+
+    # ~/.local/bin for norminette
+    LOCAL_BIN='export PATH="$HOME/.local/bin:$PATH"'
+    if ! grep -qF '.local/bin' "$rc"; then
+        echo "$LOCAL_BIN" >> "$rc"
+        echo -e "  ${GREEN}[OK]${NC} Added ~/.local/bin to PATH in $rc"
     fi
 done
 
