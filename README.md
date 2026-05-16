@@ -22,7 +22,7 @@ Mimics the real Moulinette: norminette, compilation, forbidden functions, and te
 ## Installation (Ubuntu)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/moulinette-42.git
+git clone https://github.com/infinitybynoom/moulinette-42.git
 cd moulinette-42
 bash install.sh
 source ~/.bashrc
