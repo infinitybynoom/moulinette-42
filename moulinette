@@ -164,13 +164,15 @@ run_exercise() {
 
     # 3. Norminette
     if $OPT_NORM; then
-        ex_total=$((ex_total + 1))
         local norm_result=0
         check_norminette "$ex_path" || norm_result=$?
-        if [ $norm_result -eq 0 ]; then
-            ex_score=$((ex_score + 1))
-        elif [ $norm_result -eq 2 ]; then
+        if [ $norm_result -eq 2 ]; then
             warn "Norminette skipped (not installed)"
+        else
+            ex_total=$((ex_total + 1))
+            if [ $norm_result -eq 0 ]; then
+                ex_score=$((ex_score + 1))
+            fi
         fi
     fi
 
