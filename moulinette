@@ -19,12 +19,16 @@
 MOULINETTE_DIR="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
 TESTS_DIR="$MOULINETTE_DIR/tests"
 
-source "$MOULINETTE_DIR/lib/colors.sh"
-source "$MOULINETTE_DIR/lib/header.sh"
-source "$MOULINETTE_DIR/lib/norm.sh"
-source "$MOULINETTE_DIR/lib/compile.sh"
-source "$MOULINETTE_DIR/lib/forbidden.sh"
-source "$MOULINETTE_DIR/lib/runner.sh"
+for _lib in colors.sh header.sh norm.sh compile.sh forbidden.sh runner.sh; do
+    _lib_path="$MOULINETTE_DIR/lib/$_lib"
+    if [ ! -f "$_lib_path" ]; then
+        echo "ERROR: missing $_lib_path"
+        echo "MOULINETTE_DIR=$MOULINETTE_DIR"
+        exit 1
+    fi
+    source "$_lib_path"
+done
+unset _lib _lib_path
 
 OPT_NORM=true
 OPT_HEADER=true
@@ -156,9 +160,13 @@ run_exercise() {
 
     # 2. 42 Header check
     if $OPT_HEADER; then
-        ex_total=$((ex_total + 1))
-        if check_headers_in_dir "$ex_path"; then
-            ex_score=$((ex_score + 1))
+        if declare -f check_headers_in_dir > /dev/null 2>&1; then
+            ex_total=$((ex_total + 1))
+            if check_headers_in_dir "$ex_path"; then
+                ex_score=$((ex_score + 1))
+            fi
+        else
+            warn "Header check skipped (lib/header.sh not loaded)"
         fi
     fi
 
