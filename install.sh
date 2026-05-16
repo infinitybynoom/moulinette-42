@@ -54,30 +54,29 @@ else
     fi
 fi
 
-echo -e "\n${BOLD}Setting up moulinette command...${NC}"
-mkdir -p "$INSTALL_DIR"
+echo -e "\n${BOLD}Setting up moulinette alias...${NC}"
 chmod +x "$MOULINETTE_DIR/moulinette.sh"
 
-# Write a wrapper script (not a symlink) so the real path is always known
-cat > "$INSTALL_DIR/moulinette" << WRAPPER
-#!/bin/bash
-exec "$MOULINETTE_DIR/moulinette.sh" "\$@"
-WRAPPER
-chmod +x "$INSTALL_DIR/moulinette"
-echo -e "  ${GREEN}[OK]${NC} Wrapper created: $INSTALL_DIR/moulinette -> $MOULINETTE_DIR/moulinette.sh"
+ALIAS_LINE="alias moulinette='$MOULINETTE_DIR/moulinette.sh'"
 
-if ! echo "$PATH" | grep -q "$INSTALL_DIR"; then
-    echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
-    echo -e "  ${YELLOW}[INFO]${NC} Added $INSTALL_DIR to PATH in ~/.bashrc"
-    echo -e "  ${YELLOW}[INFO]${NC} Run: source ~/.bashrc"
-fi
+for rc in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    [ -f "$rc" ] || continue
+    if grep -q "alias moulinette=" "$rc"; then
+        sed -i "s|alias moulinette=.*|$ALIAS_LINE|" "$rc"
+        echo -e "  ${GREEN}[OK]${NC} Updated alias in $rc"
+    else
+        echo "$ALIAS_LINE" >> "$rc"
+        echo -e "  ${GREEN}[OK]${NC} Added alias to $rc"
+    fi
+done
 
 echo -e "\n${BOLD}${GREEN}Installation complete!${NC}"
 echo ""
-echo "  Usage:   moulinette <module> [path]"
-echo "  Example: cd ~/project_piscine42 && moulinette c01"
-echo "  Example: moulinette all"
+echo "  Run this to activate now:"
+echo -e "  ${CYAN}source ~/.bashrc${NC}"
 echo ""
-echo "  Or run directly:"
-echo "  $MOULINETTE_DIR/moulinette.sh c01 ~/piscine/c01"
+echo "  Then use from any directory:"
+echo "  cd ~/project_piscine42/c01      && moulinette"
+echo "  cd ~/project_piscine42/c01/ex03 && moulinette"
+echo "  cd ~/project_piscine42          && moulinette all"
 echo ""

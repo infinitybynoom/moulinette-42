@@ -37,30 +37,37 @@ source ~/.bashrc
 
 ## Usage
 
-**ง่ายที่สุด — `cd` เข้า folder แล้วพิมพ์แค่ module:**
+**`cd` เข้า folder แล้วรัน `moulinette` เลย — ไม่ต้องพิมพ์อะไรเพิ่ม:**
 
 ```bash
-cd ~/project_piscine42
+# อยู่ใน module folder → ตรวจทุก exercise
+cd ~/project_piscine42/c01
+moulinette
 
-moulinette c01          # ตรวจ ./c01 ทุก exercise
-moulinette c01/ex03     # ตรวจ ./c01/ex03 exercise เดียว
-moulinette all          # ตรวจทุก module ใน ./
+# อยู่ใน exercise folder → ตรวจ exercise เดียว
+cd ~/project_piscine42/c01/ex03
+moulinette
+
+# อยู่ใน piscine root → ตรวจทุก module
+cd ~/project_piscine42
+moulinette all
 ```
 
-**หรือระบุ path เองก็ได้:**
+**หรือระบุเองก็ได้:**
 
 ```bash
-moulinette c01 ~/project_piscine42/c01
-moulinette all ~/project_piscine42
+moulinette c01           # ตรวจ c01 ใน current dir
+moulinette c01/ex03      # ตรวจ exercise เดียว
+moulinette c01 ~/project_piscine42/c01   # explicit path
 ```
 
 **Options:**
 
 ```bash
-moulinette --no-norm  c02     # ข้าม norminette
-moulinette --no-header c01    # ข้าม 42 header check
-moulinette --leaks c07        # เปิด valgrind memory check
-moulinette --help             # แสดง help
+moulinette --no-norm     # ข้าม norminette
+moulinette --no-header   # ข้าม 42 header check
+moulinette --leaks       # เปิด valgrind memory check
+moulinette --help        # แสดง help
 ```
 
 ---

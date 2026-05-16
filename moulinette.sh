@@ -38,11 +38,11 @@ TOTAL_FAIL=0
 TOTAL_WARN=0
 
 usage() {
-    echo "Usage: $0 [options] <module|all> [path]"
+    echo "Usage: $0 [options] [module|all] [path]"
     echo ""
-    echo "  If [path] is omitted, uses current directory."
-    echo ""
-    echo "Modules: c00 c01 c02 c03 c04 c05 c06 c07 c08 c09 c10 c11 c12 c13 all"
+    echo "  No args  — auto-detect from current directory name"
+    echo "  module   — c00..c13 or 'all'"
+    echo "  path     — optional, defaults to current directory"
     echo ""
     echo "Options:"
     echo "  --no-norm     Skip norminette check"
@@ -50,15 +50,32 @@ usage() {
     echo "  --leaks       Enable valgrind memory check"
     echo "  --help        Show this help"
     echo ""
-    echo "Examples (from inside your piscine folder):"
-    echo "  cd ~/project_piscine42"
-    echo "  $0 c01             # checks ./c01"
-    echo "  $0 c01/ex03        # checks ./c01/ex03"
-    echo "  $0 all             # checks all modules in ./"
-    echo ""
-    echo "  Or with explicit path:"
-    echo "  $0 c01 ~/project_piscine42/c01"
+    echo "Examples:"
+    echo "  cd ~/project_piscine42/c01      && moulinette"
+    echo "  cd ~/project_piscine42/c01/ex03 && moulinette"
+    echo "  cd ~/project_piscine42          && moulinette all"
     exit 0
+}
+
+_detect_from_cwd() {
+    local cwd
+    cwd="$(pwd)"
+    local cur
+    cur="$(basename "$cwd")"
+    local par
+    par="$(basename "$(dirname "$cwd")")"
+
+    if echo "$cur" | grep -qE '^ex[0-9]+$' && echo "$par" | grep -qE '^c[0-9]+$'; then
+        MODULE="$par/$cur"
+        SUBMISSION_PATH="$cwd"
+    elif echo "$cur" | grep -qE '^c[0-9]+$'; then
+        MODULE="$cur"
+        SUBMISSION_PATH="$cwd"
+    else
+        echo "Cannot auto-detect module from directory: $cur"
+        echo "Run 'moulinette --help' for usage."
+        exit 1
+    fi
 }
 
 parse_args() {
@@ -73,10 +90,18 @@ parse_args() {
     done
     MODULE="${1:-}"
     SUBMISSION_PATH="${2:-}"
-    # Default path: current directory
+
+    if [ -z "$MODULE" ]; then
+        _detect_from_cwd
+        return
+    fi
+
     if [ -z "$SUBMISSION_PATH" ]; then
         if echo "$MODULE" | grep -q '/'; then
-            SUBMISSION_PATH="$(pwd)/$(echo "$MODULE" | cut -d'/' -f1)/$(echo "$MODULE" | cut -d'/' -f2)"
+            local mod ex
+            mod="$(echo "$MODULE" | cut -d'/' -f1)"
+            ex="$(echo "$MODULE" | cut -d'/' -f2)"
+            SUBMISSION_PATH="$(pwd)/$mod/$ex"
         elif [ "$MODULE" = "all" ]; then
             SUBMISSION_PATH="$(pwd)"
         else
