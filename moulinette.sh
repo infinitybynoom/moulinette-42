@@ -35,7 +35,9 @@ TOTAL_FAIL=0
 TOTAL_WARN=0
 
 usage() {
-    echo "Usage: $0 [options] <module|all> <path_to_submission>"
+    echo "Usage: $0 [options] <module|all> [path]"
+    echo ""
+    echo "  If [path] is omitted, uses current directory."
     echo ""
     echo "Modules: c00 c01 c02 c03 c04 c05 c06 c07 c08 c09 c10 c11 c12 c13 all"
     echo ""
@@ -45,10 +47,14 @@ usage() {
     echo "  --leaks       Enable valgrind memory check"
     echo "  --help        Show this help"
     echo ""
-    echo "Examples:"
-    echo "  $0 c01 ~/piscine/c01"
-    echo "  $0 c01/ex03 ~/piscine/c01/ex03"
-    echo "  $0 all ~/piscine"
+    echo "Examples (from inside your piscine folder):"
+    echo "  cd ~/project_piscine42"
+    echo "  $0 c01             # checks ./c01"
+    echo "  $0 c01/ex03        # checks ./c01/ex03"
+    echo "  $0 all             # checks all modules in ./"
+    echo ""
+    echo "  Or with explicit path:"
+    echo "  $0 c01 ~/project_piscine42/c01"
     exit 0
 }
 
@@ -64,6 +70,16 @@ parse_args() {
     done
     MODULE="${1:-}"
     SUBMISSION_PATH="${2:-}"
+    # Default path: current directory
+    if [ -z "$SUBMISSION_PATH" ]; then
+        if echo "$MODULE" | grep -q '/'; then
+            SUBMISSION_PATH="$(pwd)/$(echo "$MODULE" | cut -d'/' -f1)/$(echo "$MODULE" | cut -d'/' -f2)"
+        elif [ "$MODULE" = "all" ]; then
+            SUBMISSION_PATH="$(pwd)"
+        else
+            SUBMISSION_PATH="$(pwd)/$MODULE"
+        fi
+    fi
 }
 
 load_exercise_config() {
@@ -264,7 +280,7 @@ print_summary() {
 
 parse_args "$@"
 
-if [ -z "$MODULE" ] || [ -z "$SUBMISSION_PATH" ]; then
+if [ -z "$MODULE" ]; then
     usage
 fi
 

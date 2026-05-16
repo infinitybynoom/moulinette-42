@@ -37,24 +37,30 @@ source ~/.bashrc
 
 ## Usage
 
+**ง่ายที่สุด — `cd` เข้า folder แล้วพิมพ์แค่ module:**
+
 ```bash
-# Check one full module
-moulinette c01 ~/piscine/c01
+cd ~/project_piscine42
 
-# Check one specific exercise
-moulinette c01/ex03 ~/piscine/c01/ex03
+moulinette c01          # ตรวจ ./c01 ทุก exercise
+moulinette c01/ex03     # ตรวจ ./c01/ex03 exercise เดียว
+moulinette all          # ตรวจทุก module ใน ./
+```
 
-# Check all modules at once
-moulinette all ~/piscine
+**หรือระบุ path เองก็ได้:**
 
-# Skip norminette check
-moulinette --no-norm c02 ~/piscine/c02
+```bash
+moulinette c01 ~/project_piscine42/c01
+moulinette all ~/project_piscine42
+```
 
-# Skip 42 header check
-moulinette --no-header c01 ~/piscine/c01
+**Options:**
 
-# Enable memory leak check (valgrind)
-moulinette --leaks c07 ~/piscine/c07
+```bash
+moulinette --no-norm  c02     # ข้าม norminette
+moulinette --no-header c01    # ข้าม 42 header check
+moulinette --leaks c07        # เปิด valgrind memory check
+moulinette --help             # แสดง help
 ```
 
 ---
