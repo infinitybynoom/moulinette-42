@@ -17,7 +17,7 @@
 
 set -euo pipefail
 
-MOULINETTE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MOULINETTE_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 TESTS_DIR="$MOULINETTE_DIR/tests"
 
 source "$MOULINETTE_DIR/lib/colors.sh"
