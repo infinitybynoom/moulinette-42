@@ -11,18 +11,19 @@ check_norminette() {
         return 2
     fi
 
+    # Pass directory directly — avoids *.h glob hanging on stdin when no .h files exist
     local output
-    output=$(norminette "$dir"/*.c "$dir"/*.h 2>/dev/null)
+    output=$(norminette "$dir" 2>/dev/null) || true
     local exit_code=$?
 
-    if [ $exit_code -eq 0 ]; then
-        pass "Norminette: All files OK"
-    else
+    if echo "$output" | grep -q "Error"; then
         fail "Norminette errors found:"
         echo "$output" | grep -v "^OK" | while IFS= read -r line; do
             echo "    $line"
         done
         result=1
+    else
+        pass "Norminette: All files OK"
     fi
     return $result
 }

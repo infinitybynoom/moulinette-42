@@ -15,7 +15,7 @@
 #    --help        Show this help
 # ============================================================
 
-set -euo pipefail
+set -uo pipefail
 
 _src="${BASH_SOURCE[0]}"
 while [ -L "$_src" ]; do _src="$(readlink "$_src")"; done
