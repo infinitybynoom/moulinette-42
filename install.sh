@@ -58,10 +58,13 @@ echo -e "\n${BOLD}Setting up moulinette command...${NC}"
 mkdir -p "$INSTALL_DIR"
 chmod +x "$MOULINETTE_DIR/moulinette.sh"
 
-if [ ! -f "$INSTALL_DIR/moulinette" ] || [ "$MOULINETTE_DIR/moulinette.sh" -nt "$INSTALL_DIR/moulinette" ]; then
-    ln -sf "$MOULINETTE_DIR/moulinette.sh" "$INSTALL_DIR/moulinette"
-    echo -e "  ${GREEN}[OK]${NC} Symlink created: $INSTALL_DIR/moulinette"
-fi
+# Write a wrapper script (not a symlink) so the real path is always known
+cat > "$INSTALL_DIR/moulinette" << WRAPPER
+#!/bin/bash
+exec "$MOULINETTE_DIR/moulinette.sh" "\$@"
+WRAPPER
+chmod +x "$INSTALL_DIR/moulinette"
+echo -e "  ${GREEN}[OK]${NC} Wrapper created: $INSTALL_DIR/moulinette -> $MOULINETTE_DIR/moulinette.sh"
 
 if ! echo "$PATH" | grep -q "$INSTALL_DIR"; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
@@ -71,9 +74,9 @@ fi
 
 echo -e "\n${BOLD}${GREEN}Installation complete!${NC}"
 echo ""
-echo "  Usage:   moulinette <module> <path>"
-echo "  Example: moulinette c01 ~/piscine/c01"
-echo "  Example: moulinette all ~/piscine"
+echo "  Usage:   moulinette <module> [path]"
+echo "  Example: cd ~/project_piscine42 && moulinette c01"
+echo "  Example: moulinette all"
 echo ""
 echo "  Or run directly:"
 echo "  $MOULINETTE_DIR/moulinette.sh c01 ~/piscine/c01"
