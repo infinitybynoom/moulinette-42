@@ -3,6 +3,8 @@
 Automated grader for **42 School C Piscine**, covering **C00 to C13**.  
 Mimics the real Moulinette: norminette, compilation, forbidden functions, and test output.
 
+> **Works on 42 School piscine machines** — no `sudo` required. Tools like `gcc`, `nm`, and `valgrind` are pre-installed. Only `norminette` is installed via `pip3 --user`.
+
 ---
 
 ## What it checks (per exercise)
@@ -17,21 +19,24 @@ Mimics the real Moulinette: norminette, compilation, forbidden functions, and te
 | 6 | **Test output** | Does output match expected exactly? |
 | 7 | **Valgrind** (opt) | Any memory leaks? (`--leaks` flag) |
 
+Steps 2–4 are skipped gracefully if the tool is missing — they won't affect your score.
+
 ---
 
-## Installation (Ubuntu)
+## Installation
 
 ```bash
-git clone https://github.com/infinitybynoom/moulinette-42.git
-cd moulinette-42
+git clone https://github.com/infinitybynoom/moulinette-42.git ~/moulinette-42
+cd ~/moulinette-42
 bash install.sh
 source ~/.bashrc
 ```
 
 **What `install.sh` does:**
-- Installs `gcc`, `clang`, `nm` (binutils), `valgrind`
-- Installs `norminette` via `pip3`
-- Creates a `moulinette` symlink in `~/.local/bin`
+- Checks that `gcc`, `nm`, `valgrind` are available (warns if not — no install, no sudo)
+- Installs `norminette` via `pip3 install --user` (no sudo)
+- Adds `~/moulinette-42` to your `$PATH` in `~/.bashrc`
+- Removes any old alias or symlink from previous installs
 
 ---
 
@@ -56,9 +61,9 @@ moulinette all
 **หรือระบุเองก็ได้:**
 
 ```bash
-moulinette c01           # ตรวจ c01 ใน current dir
-moulinette c01/ex03      # ตรวจ exercise เดียว
-moulinette c01 ~/project_piscine42/c01   # explicit path
+moulinette c01                              # ตรวจ c01 ใน current dir
+moulinette c01/ex03                         # ตรวจ exercise เดียว
+moulinette c01 ~/project_piscine42/c01      # explicit path
 ```
 
 **Options:**
@@ -122,7 +127,7 @@ moulinette --help        # แสดง help
 | C00 | Basic output with `write()` | ex00–ex08 |
 | C01 | Pointers | ex00–ex08 |
 | C02 | String manipulation | ex00–ex12 |
-| C03 | String comparison / concat | ex00–ex06 |
+| C03 | String comparison / concat | ex00–ex05 |
 | C04 | Number conversions | ex00–ex03 |
 | C05 | Recursion | ex00–ex07 |
 | C06 | argc / argv | ex00–ex02 |
@@ -143,17 +148,19 @@ moulinette --help        # แสดง help
 Runs the official `norminette` tool from 42 School (Python package).
 
 ```bash
-norminette <submission_dir>/*.c *.h
+norminette <submission_dir>
 ```
 
 Norminette enforces:
 - Max **80 characters** per line
 - Max **25 lines** per function
-- Max **5 functions** per `.c` file  
+- Max **5 functions** per `.c` file
 - **tab indentation** (not spaces)
 - **snake_case** for variable/function names
 - Mandatory **42 header** at top of each file
 - No trailing whitespace
+
+If `norminette` is not installed, this step is skipped and does **not** affect your score.
 
 ### 2. Forbidden function detection
 
@@ -192,6 +199,7 @@ diff actual.txt expected.txt
 
 Each exercise gets a score (checks passed / total checks).  
 ≥ 60% = PASS, < 60% = FAIL.  
+Skipped checks (missing tools) are excluded from the total — they don't penalise your score.  
 Final summary shows total passed/failed across all exercises.
 
 ---
@@ -225,22 +233,25 @@ tests/c01/ex00/
 
 `info.conf` format:
 ```bash
-FILES="ft_ft.c"          # required file names (space separated)
-FORBIDDEN=""             # forbidden functions (space separated)
+FILES="ft_ft.c"              # required file names (space separated)
+FORBIDDEN=""                 # forbidden functions (space separated)
 FLAGS="-Wall -Wextra -Werror"
-HAS_ARGS=false           # true if test uses args_cases.txt
+HAS_ARGS=false               # true if test uses args_cases.txt
 ```
 
 ---
 
-## Requirements (Ubuntu)
+## Requirements
 
-- Ubuntu 20.04 / 22.04 / 24.04
-- `gcc` / `clang` (cc)
-- `python3` + `pip3`
-- `norminette` (installed by `install.sh`)
-- `nm` (from `binutils`)
-- `valgrind` (optional, for `--leaks`)
+| Tool | Required | How to get |
+|------|----------|-----------|
+| `bash` | Yes | pre-installed |
+| `cc` / `gcc` | Yes | pre-installed on 42 machines |
+| `nm` (binutils) | Optional | pre-installed on Ubuntu |
+| `norminette` | Optional | `pip3 install norminette --user` |
+| `valgrind` | Optional | only needed for `--leaks` flag |
+
+**No `sudo` needed** — works on 42 School piscine machines out of the box.
 
 ---
 
