@@ -19,7 +19,7 @@ Mimics the real Moulinette: norminette, compilation, forbidden functions, and te
 | 6 | **Test output** | Does output match expected exactly? |
 | 7 | **Valgrind** (opt) | Any memory leaks? (`--leaks` flag) |
 
-Steps 2–4 are skipped gracefully if the tool is missing — they won't affect your score.
+Steps 2, 3, 4, and 7 are skipped gracefully if the tool is missing — they won't affect your score.
 
 ---
 
@@ -55,25 +55,18 @@ git fetch origin && git reset --hard origin/main
 
 ---
 
-## Cleanup (ลบไฟล์เก่าที่ไม่ใช้)
+## Cleanup
 
-ถ้าเคยติดตั้งเวอร์ชันเก่ามาก่อน อาจมีไฟล์ค้างอยู่:
+If you installed an older version, remove leftover files:
 
 ```bash
-# ลบ moulinette.sh เวอร์ชันเก่า (แทนที่ด้วย moulinette แล้ว)
-rm -f ~/moulinette-42/moulinette.sh
-
-# ลบ alias เก่าออกจาก ~/.bashrc
-sed -i '/alias moulinette=/d' ~/.bashrc
-
-# ลบ symlink/file เก่าใน ~/.local/bin
-rm -f ~/.local/bin/moulinette
-
-# รีโหลด shell
+rm -f ~/moulinette-42/moulinette.sh     # old script (replaced by moulinette)
+sed -i '/alias moulinette=/d' ~/.bashrc  # old alias
+rm -f ~/.local/bin/moulinette            # old symlink
 source ~/.bashrc
 ```
 
-> `install.sh` ทำ cleanup เหล่านี้ให้อัตโนมัติ — รัน `bash install.sh` อีกครั้งก็ได้
+> `install.sh` handles this automatically — re-running it is enough.
 
 ---
 
@@ -164,7 +157,7 @@ moulinette --help        # แสดง help
 | C00 | Basic output with `write()` | ex00–ex08 |
 | C01 | Pointers | ex00–ex08 |
 | C02 | String manipulation | ex00–ex12 |
-| C03 | String comparison / concat | ex00–ex05 |
+| C03 | String comparison / concat | ex00–ex06 |
 | C04 | Number conversions | ex00–ex03 |
 | C05 | Recursion | ex00–ex07 |
 | C06 | argc / argv | ex00–ex02 |
