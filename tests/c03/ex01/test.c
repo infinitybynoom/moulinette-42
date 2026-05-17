@@ -1,12 +1,21 @@
 #include <stdio.h>
 
-char	*ft_strncat(char *dest, char *src, unsigned int nb);
+int	ft_strncmp(char *s1, char *s2, unsigned int n);
+
+static void	print_sign(int n)
+{
+	if (n < 0)
+		printf("-\n");
+	else if (n > 0)
+		printf("+\n");
+	else
+		printf("0\n");
+}
 
 int	main(void)
 {
-	char	dst[64] = "Hello, ";
-
-	ft_strncat(dst, "42 world", 2);
-	printf("%s\n", dst);
+	print_sign(ft_strncmp("abcdef", "abcxyz", 3));
+	print_sign(ft_strncmp("abcdef", "abcxyz", 4));
+	print_sign(ft_strncmp("abc", "abc", 100));
 	return (0);
 }

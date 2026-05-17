@@ -1,16 +1,13 @@
 #include <stdio.h>
 
-char	*ft_strstr(char *str, char *to_find);
+unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
 
 int	main(void)
 {
-	char	*r;
+	char			dst[10] = "Hi";
+	unsigned int	ret;
 
-	r = ft_strstr("Hello, 42!", "42");
-	printf("%s\n", r ? r : "NULL");
-	r = ft_strstr("Hello", "world");
-	printf("%s\n", r ? r : "NULL");
-	r = ft_strstr("abc", "");
-	printf("%s\n", r ? r : "NULL");
+	ret = ft_strlcat(dst, " there!", 10);
+	printf("[%s] ret=%u\n", dst, ret);
 	return (0);
 }

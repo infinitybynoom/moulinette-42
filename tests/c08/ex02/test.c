@@ -1,12 +1,10 @@
 #include <stdio.h>
-#include "ft_swap.h"
+#include "ft_abs.h"
 
 int	main(void)
 {
-	int	a = 10;
-	int	b = 20;
-
-	SWAP(a, b);
-	printf("%d %d\n", a, b);
+	printf("%d\n", ABS(-42));
+	printf("%d\n", ABS(42));
+	printf("%d\n", ABS(0));
 	return (0);
 }

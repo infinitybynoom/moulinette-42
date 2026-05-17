@@ -1,13 +1,13 @@
 #include <stdio.h>
+#include <string.h>
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
+char	*ft_strcat(char *dest, char *src);
 
 int	main(void)
 {
-	char	dst[10] = "Hi";
-	unsigned int	ret;
+	char	dst[64] = "Hello, ";
 
-	ret = ft_strlcat(dst, " there!", 10);
-	printf("[%s] ret=%u\n", dst, ret);
+	ft_strcat(dst, "42!");
+	printf("%s\n", dst);
 	return (0);
 }

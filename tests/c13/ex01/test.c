@@ -1,33 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include "../c12/ft_list.h"
+#include "../ft_btree.h"
 
-t_list	*ft_create_elem(void *data);
-void	ft_list_push_front(t_list **begin_list, void *data);
-void	ft_list_remove_if(t_list **begin_list, void *data_ref,
-	int (*cmp)(void *, void *), void (*free_fct)(void *));
+t_btree	*btree_create_node(void *item);
+void	btree_apply_prefix(t_btree *root, void (*applyf)(void *));
 
-static int	cmp_str(void *a, void *b)
+static void	print_item(void *item)
 {
-	return (strcmp((char *)a, (char *)b));
+	printf("%s\n", (char *)item);
 }
 
 int	main(void)
 {
-	t_list	*list = NULL;
-	t_list	*tmp;
+	t_btree	*root;
 
-	ft_list_push_front(&list, "c");
-	ft_list_push_front(&list, "b");
-	ft_list_push_front(&list, "a");
-	ft_list_push_front(&list, "b");
-	ft_list_remove_if(&list, "b", cmp_str, NULL);
-	tmp = list;
-	while (tmp)
-	{
-		printf("%s\n", (char *)tmp->data);
-		tmp = tmp->next;
-	}
+	root = btree_create_node("A");
+	root->left = btree_create_node("B");
+	root->right = btree_create_node("C");
+	root->left->left = btree_create_node("D");
+	root->left->right = btree_create_node("E");
+	btree_apply_prefix(root, print_item);
 	return (0);
 }

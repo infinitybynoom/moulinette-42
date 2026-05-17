@@ -1,21 +1,16 @@
 #include <stdio.h>
 
-int	ft_strncmp(char *s1, char *s2, unsigned int n);
-
-static void	print_sign(int n)
-{
-	if (n < 0)
-		printf("-\n");
-	else if (n > 0)
-		printf("+\n");
-	else
-		printf("0\n");
-}
+char	*ft_strstr(char *str, char *to_find);
 
 int	main(void)
 {
-	print_sign(ft_strncmp("abcdef", "abcxyz", 3));
-	print_sign(ft_strncmp("abcdef", "abcxyz", 4));
-	print_sign(ft_strncmp("abc", "abc", 100));
+	char	*r;
+
+	r = ft_strstr("Hello, 42!", "42");
+	printf("%s\n", r ? r : "NULL");
+	r = ft_strstr("Hello", "world");
+	printf("%s\n", r ? r : "NULL");
+	r = ft_strstr("abc", "");
+	printf("%s\n", r ? r : "NULL");
 	return (0);
 }

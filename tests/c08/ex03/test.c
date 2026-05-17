@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include "ft_div_mod.h"
+#include "ft_point.h"
 
 int	main(void)
 {
-	int	d;
-	int	m;
+	t_point	point;
 
-	DIV_MOD(10, 3, d, m);
-	printf("%d %d\n", d, m);
+	point.x = 42;
+	point.y = 21;
+	printf("%d %d\n", point.x, point.y);
 	return (0);
 }

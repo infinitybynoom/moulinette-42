@@ -1,1 +1,1 @@
-[Hi there!] ret=9
+Hello, 42!

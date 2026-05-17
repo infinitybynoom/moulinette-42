@@ -1,2 +1,5 @@
-list2 NULL
-1 2 3 4
+D
+E
+B
+C
+A
