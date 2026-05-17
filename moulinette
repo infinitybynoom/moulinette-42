@@ -204,10 +204,12 @@ run_exercise() {
     fi
 
     # 6. Compile + Test
+    local _compile_ok=false
     if [ -f "$test_dir/test.c" ]; then
         ex_total=$((ex_total + 2))
         if compile_exercise "$ex_path" "$test_dir" "$FLAGS"; then
             ex_score=$((ex_score + 1))
+            _compile_ok=true
             if $HAS_ARGS; then
                 if run_tests_args "$ex_path" "$test_dir"; then
                     ex_score=$((ex_score + 1))
@@ -242,7 +244,7 @@ run_exercise() {
     echo ""
     _print_score "$ex" $ex_score $ex_total
 
-    if [ $ex_total -gt 0 ] && [ $((ex_score * 100 / ex_total)) -ge 60 ]; then
+    if [ $ex_total -gt 0 ] && [ $((ex_score * 100 / ex_total)) -ge 60 ] && $_compile_ok; then
         TOTAL_PASS=$((TOTAL_PASS + 1))
     else
         TOTAL_FAIL=$((TOTAL_FAIL + 1))

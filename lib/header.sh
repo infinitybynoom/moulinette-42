@@ -17,9 +17,16 @@ check_headers_in_dir() {
     local dir="$1"
     local result=0
     section "Checking 42 School Headers"
-    for f in "$dir"/*.c "$dir"/*.h; do
-        [ -f "$f" ] || continue
-        check_42_header "$f" || result=1
-    done
+    if [ -n "$FILES" ]; then
+        for _f in $FILES; do
+            [ -f "$dir/$_f" ] || continue
+            check_42_header "$dir/$_f" || result=1
+        done
+    else
+        for f in "$dir"/*.c "$dir"/*.h; do
+            [ -f "$f" ] || continue
+            check_42_header "$f" || result=1
+        done
+    fi
     return $result
 }
