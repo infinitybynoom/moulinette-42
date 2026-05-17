@@ -8,8 +8,14 @@ compile_exercise() {
 
     section "Compilation"
 
-    local src_files
-    src_files=$(find "$ex_dir" -maxdepth 1 -name "*.c" 2>/dev/null | tr '\n' ' ')
+    local src_files=""
+    if [ -n "$FILES" ]; then
+        for _f in $FILES; do
+            [[ "$_f" == *.c ]] && src_files="$src_files $ex_dir/$_f"
+        done
+    else
+        src_files=$(find "$ex_dir" -maxdepth 1 -name "*.c" 2>/dev/null | tr '\n' ' ')
+    fi
 
     if [ -z "$src_files" ]; then
         fail "No .c files found in $ex_dir"
