@@ -1,8 +1,7 @@
 void	ft_print_program_name(char *program_name);
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	(void)argc;
-	ft_print_program_name(argv[0]);
+	ft_print_program_name("moulinette_test");
 	return (0);
 }

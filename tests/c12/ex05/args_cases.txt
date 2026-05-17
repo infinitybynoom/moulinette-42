@@ -1,3 +1,3 @@
-hello world 42|hello
-world
-42
+hello world|hello\nworld
+a b c|a\nb\nc
+one|one

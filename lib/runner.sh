@@ -70,13 +70,15 @@ run_tests_args() {
     while IFS='|' read -r args expected; do
         [ -z "$args" ] && [ -z "$expected" ] && continue
         local actual
-        actual=$(timeout 5 "$binary" $args 2>&1)
-        if [ "$actual" = "$expected" ]; then
+        local expected_decoded
+        expected_decoded="$(printf '%b' "$expected")"
+        actual=$(cd "$test_dir" && timeout 5 "$binary" $args 2>&1)
+        if [ "$actual" = "$expected_decoded" ]; then
             pass "Test $test_num: OK (args: $args)"
         else
             fail "Test $test_num FAILED (args: $args)"
-            echo "    Expected: $(echo "$expected" | head -1)"
-            echo "    Got:      $(echo "$actual" | head -1)"
+            echo "    Expected: $(echo "$expected_decoded" | head -3 | tr '\n' '|')"
+            echo "    Got:      $(echo "$actual" | head -3 | tr '\n' '|')"
             result=1
         fi
         test_num=$((test_num + 1))
