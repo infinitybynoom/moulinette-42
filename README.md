@@ -167,7 +167,7 @@ moulinette --help        # แสดง help
 | C10 | File I/O | ex00–ex02 |
 | C11 | Function pointers | ex00–ex04 |
 | C12 | Linked lists | ex00–ex09 |
-| C13 | Advanced linked list ops | ex00–ex03 |
+| C13 | Binary trees | ex00–ex03 |
 
 ---
 
@@ -287,4 +287,4 @@ HAS_ARGS=false               # true if test uses args_cases.txt
 
 ## License
 
-MIT — free to use, share, modify.
+[MIT](LICENSE) — free to use, share, modify.
