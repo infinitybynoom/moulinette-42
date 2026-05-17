@@ -157,8 +157,8 @@ moulinette --help        # แสดง help
 | C00 | Basic output with `write()` | ex00–ex08 |
 | C01 | Pointers | ex00–ex08 |
 | C02 | String manipulation | ex00–ex12 |
-| C03 | String comparison / concat | ex00–ex06 |
-| C04 | Number conversions | ex00–ex03 |
+| C03 | String concat, comparison & search | ex00–ex06 |
+| C04 | Output functions & number conversion | ex00–ex03 |
 | C05 | Recursion | ex00–ex07 |
 | C06 | argc / argv | ex00–ex02 |
 | C07 | Memory allocation (`malloc`) | ex00–ex03 |
