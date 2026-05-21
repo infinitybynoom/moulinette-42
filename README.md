@@ -157,17 +157,17 @@ moulinette --help        # แสดง help
 | C00 | Basic output with `write()` | ex00–ex08 |
 | C01 | Pointers | ex00–ex08 |
 | C02 | String manipulation | ex00–ex12 |
-| C03 | String concat, comparison & search | ex00–ex06 |
-| C04 | Output functions & number conversion | ex00–ex03 |
-| C05 | Recursion | ex00–ex07 |
-| C06 | argc / argv | ex00–ex02 |
-| C07 | Memory allocation (`malloc`) | ex00–ex03 |
-| C08 | Header files (macros) | ex00–ex04 |
+| C03 | String concat, comparison & search | ex00–ex05 |
+| C04 | Output functions & number conversion | ex00–ex05 |
+| C05 | Recursion | ex00–ex08 |
+| C06 | argc / argv | ex00–ex03 |
+| C07 | Memory allocation (`malloc`) | ex00–ex05 |
+| C08 | Header files (macros) | ex00–ex05 |
 | C09 | Makefiles | ex00–ex02 |
-| C10 | File I/O | ex00–ex02 |
-| C11 | Function pointers | ex00–ex04 |
-| C12 | Linked lists | ex00–ex09 |
-| C13 | Binary trees | ex00–ex03 |
+| C10 | File I/O | ex00–ex03 |
+| C11 | Function pointers | ex00–ex07 |
+| C12 | Linked lists | ex00–ex17 |
+| C13 | Binary trees | ex00–ex07 |
 
 ---
 

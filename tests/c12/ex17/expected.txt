@@ -1,0 +1,6 @@
+list2 empty: yes
+1
+2
+3
+4
+5

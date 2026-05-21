@@ -1,0 +1,3 @@
+cherry apple banana|apple\nbanana\ncherry
+c b a|a\nb\nc
+hello|hello

@@ -72,7 +72,7 @@ tests/<cXX>/
 | ex04 | ft_strstr.c |
 | ex05 | ft_strlcat.c |
 
-> ⚠️ c03/ex06 ใน moulinette มี ft_strnstr.c ซึ่งไม่อยู่ใน PDF — ยังไม่ได้ลบ
+> ✅ c03 ครบแล้ว ex00–ex05 (ลบ ex06/ft_strnstr.c ออกแล้ว — ไม่มีใน PDF)
 
 ### C04
 | ex | file |
@@ -84,7 +84,7 @@ tests/<cXX>/
 | ex04 | ft_putnbr_base.c |
 | ex05 | ft_atoi_base.c |
 
-> ⚠️ moulinette มีแค่ ex00–ex03 (ขาด ex04, ex05)
+> ✅ ครบแล้ว ex00–ex05
 
 ### C05
 | ex | file |
@@ -99,7 +99,7 @@ tests/<cXX>/
 | ex07 | ft_find_next_prime.c |
 | ex08 | ft_ten_queens_puzzle.c |
 
-> ⚠️ moulinette มีแค่ ex00–ex07 (ขาด ex08)
+> ✅ ครบแล้ว ex00–ex08
 
 ### C06
 | ex | file |
@@ -109,7 +109,7 @@ tests/<cXX>/
 | ex02 | ft_rev_params.c |
 | ex03 | ft_sort_params.c |
 
-> ⚠️ moulinette มีแค่ ex00–ex02 (ขาด ex03)
+> ✅ ครบแล้ว ex00–ex03
 
 ### C07
 | ex | file |
@@ -121,7 +121,7 @@ tests/<cXX>/
 | ex04 | ft_convert_base.c, ft_convert_base2.c |
 | ex05 | ft_split.c |
 
-> ⚠️ moulinette มีแค่ ex00–ex03 (ขาด ex04, ex05)
+> ✅ ครบแล้ว ex00–ex05
 
 ### C08
 | ex | file |
@@ -133,7 +133,7 @@ tests/<cXX>/
 | ex04 | ft_strs_to_tab.c |
 | ex05 | ft_show_tab.c |
 
-> ⚠️ moulinette มีแค่ ex00–ex04 (ขาด ex05)
+> ✅ ครบแล้ว ex00–ex05
 
 ### C09
 | ex | file |
@@ -150,7 +150,7 @@ tests/<cXX>/
 | ex02 | Makefile + program files (tail) |
 | ex03 | Makefile + program files (hexdump) |
 
-> ⚠️ moulinette มีแค่ ex00–ex02 (ขาด ex03)
+> ✅ ครบแล้ว ex00–ex03
 
 ### C11
 | ex | file |
@@ -164,7 +164,7 @@ tests/<cXX>/
 | ex06 | ft_sort_string_tab.c |
 | ex07 | ft_advanced_sort_string_tab.c |
 
-> ⚠️ moulinette มีแค่ ex00–ex04 (ขาด ex05, ex06, ex07)
+> ✅ ครบแล้ว ex00–ex07
 
 ### C12
 | ex | file |
@@ -188,7 +188,7 @@ tests/<cXX>/
 | ex16 | ft_sorted_list_insert.c, ft_list.h |
 | ex17 | ft_sorted_list_merge.c, ft_list.h |
 
-> ⚠️ moulinette มีแค่ ex00–ex09 (ขาด ex10–ex17)
+> ✅ ครบแล้ว ex00–ex17
 > ft_list.h อยู่ที่ tests/c12/ft_list.h (shared ทุก ex)
 
 ### C13
@@ -203,7 +203,7 @@ tests/<cXX>/
 | ex06 | btree_level_count.c, ft_btree.h |
 | ex07 | btree_apply_by_level.c, ft_btree.h |
 
-> ⚠️ moulinette มีแค่ ex00–ex03 (ขาด ex04–ex07)
+> ✅ ครบแล้ว ex00–ex07
 > ft_btree.h อยู่ที่ tests/c13/ft_btree.h (shared ทุก ex)
 > โครงสร้าง: left, right, *item
 
@@ -221,15 +221,4 @@ tests/<cXX>/
 
 ## สิ่งที่ยังขาด (TODO)
 
-| subject | ขาด |
-|---|---|
-| C03 | ex06 (ft_strnstr.c) — ไม่มีใน PDF ควรลบ |
-| C04 | ex04 (ft_putnbr_base.c), ex05 (ft_atoi_base.c) |
-| C05 | ex08 (ft_ten_queens_puzzle.c) |
-| C06 | ex03 (ft_sort_params.c) |
-| C07 | ex04 (ft_convert_base.c + ft_convert_base2.c), ex05 (ft_split.c) |
-| C08 | ex05 (ft_show_tab.c) |
-| C10 | ex03 (hexdump) |
-| C11 | ex05 (do-op), ex06 (ft_sort_string_tab.c), ex07 (ft_advanced_sort_string_tab.c) |
-| C12 | ex10–ex17 |
-| C13 | ex04–ex07 |
+ไม่มี — ทุก subject ครบแล้ว C00–C13
